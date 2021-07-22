@@ -81,12 +81,12 @@
                         <aside>
                             <ul class="nav flex-column">
                                 <li class="nav-item nav-pills">
-                                    <a class="nav-link {{Route::currentRouteName() === 'admin.dashboard' ? 'active' : ''}}" aria-current="page" href="#">
+                                    <a class="nav-link {{Route::currentRouteName() === 'admin.dashboard' ? 'active' : ''}}" aria-current="page" href="{{route('admin.dashboard')}}">
                                         <i class="fas fa-tachometer-alt fa-lg fa-fw"></i> Dashboard
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Posts</a>
+                                <li class="nav-item nav-pills">
+                                    <a class="nav-link {{Route::currentRouteName() === 'admin.posts.index' ? 'active' : ''}}" href="{{ route('admin.posts.index')}}">Posts</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Users</a>
