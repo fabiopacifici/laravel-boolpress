@@ -29,7 +29,7 @@
             <td>
                 {{$post->title}}
             </td>
-            <td>
+            <td class="d-flex">
                 <a href="{{route('admin.posts.show', $post->id )}}" class="btn btn-primary">
                     <i class="fas fa-eye fa-sm fa-fw"></i>
                 </a>
@@ -37,9 +37,11 @@
                     <i class="fas fa-pencil-alt fa-sm fa-fw"></i>
                 </a>
 
-                <a href="#" class="btn btn-danger">
-                    <i class="fas fa-trash fa-sm fa-fw"></i>
-                </a>
+                <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash fa-sm fa-fw"></i></button>
+                </form>
 
 
             </td>
