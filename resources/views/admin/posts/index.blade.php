@@ -1,7 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
-<h1>All Posts </h1>
+
+<div class="d-flex justify-content-between">
+    <h1>All Posts </h1>
+    <div>
+        <a class="btn btn-primary" href="{{route('admin.posts.create')}}"> <i class="fas fa-plus-circle fa-sm fa-fw"></i> Add a post</a>
+    </div>
+</div>
+
+
 <table class="table table-striped table-inverse ">
     <thead class="thead-inverse">
         <tr>
