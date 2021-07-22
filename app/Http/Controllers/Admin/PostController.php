@@ -38,7 +38,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //ddd($request->all());
+        $validateData = $request->validate([
+            'title' => 'required | min:5 | max:255',
+            'image' => 'nullable | max:255',
+            'body' => 'required'
+        ]);
+        Post::create($validateData);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
