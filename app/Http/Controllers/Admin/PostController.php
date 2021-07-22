@@ -67,7 +67,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -79,7 +79,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validateData = $request->validate([
+            'title' => 'required | min:5 | max:255',
+            'image' => 'nullable | max:255',
+            'body' => 'required'
+        ]);
+        $post->update($validateData);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
