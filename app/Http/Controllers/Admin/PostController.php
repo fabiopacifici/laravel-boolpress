@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -38,12 +39,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         //ddd($request->all());
+
         $validateData = $request->validate([
             'title' => 'required | min:5 | max:255',
-            'image' => 'nullable | max:255',
+            'image' => 'nullable | image | max:50',
             'body' => 'required'
         ]);
+        //ddd($validateData);
+        // Opzione con hasFile
+         if($request->hasFile('image')){
+            $file_path = Storage::put('post_images', $validateData['image']); //post_images/isdnmdgpo.jpg
+            //ddd($file_path);
+            $validateData['image'] = $file_path;
+        }
+
+        //ddd($validateData);
         Post::create($validateData);
         return redirect()->route('admin.posts.index');
     }
@@ -79,11 +91,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //ddd($request->hasFile('image'));
+
         $validateData = $request->validate([
             'title' => 'required | min:5 | max:255',
-            'image' => 'nullable | max:255',
+            'image' => 'nullable | image | max:50',
             'body' => 'required'
         ]);
+        //ddd($validateData);
+
+        // Opzione per verificare se chiave esiste in un array in plain php
+        if(array_key_exists('image', $validateData)) {
+            $file_path = Storage::put('post_images', $validateData['image']);
+            //ddd($file_path);
+            $validateData['image'] = $file_path;
+        }
+        //ddd($validateData);
+
         $post->update($validateData);
         return redirect()->route('admin.posts.index');
     }

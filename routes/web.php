@@ -16,7 +16,16 @@ use Illuminate\Support\Facades\Route;
 /* Pagine non connesse ad un modello */
 Route::get('/', 'PageController@index')->name('home');
 Route::get('about', 'PageController@about')->name('about');
-Route::get('contacts', 'PageController@contacts')->name('contacts');
+
+/* OPZIONE[1] senza modello Routes contact form */
+
+#Route::get('contacts', 'PageController@contacts')->name('contacts');
+#Route::post('contacts', 'PageController@sendContactForm')->name('contacts.send');
+
+/* OPZIONE2 Routes model Contact */
+Route::get('contacts', 'ContactController@form')->name('contacts');
+Route::post('contacts', 'ContactController@storeAndSend')->name('contacts.send');
+
 
 /* Pagine dei Posts */
 Route::get('posts', 'PostController@index')->name('posts.index');

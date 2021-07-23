@@ -11,7 +11,7 @@
     </ul>
 </div>
 @endif
-<form action="{{route('admin.posts.update', $post->id)}}" method="post">
+<form action="{{route('admin.posts.update', $post->id)}}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="form-group">
@@ -21,9 +21,9 @@
     </div>
 
     <div class="form-group">
-        <label for="image">Cover Image</label>
-        <input type="text" name="image" id="image" class="form-control @error('image') is-invalid @enderror" placeholder="https://" aria-describedby="imageHelper" value="{{$post->image}}">
-        <small id="imageHelper" class="text-muted">Type an image url for the current post, max: 255 char</small>
+        <label for="image">Replace Cover Image</label>
+        <img src="{{asset('storage/' . $post->image)}}" alt="">
+        <input type="file" name="image" id="image">
     </div>
 
     <div class="form-group">
