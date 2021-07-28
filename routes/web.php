@@ -31,9 +31,12 @@ Route::post('contacts', 'ContactController@storeAndSend')->name('contacts.send')
 Route::get('posts', 'PostController@index')->name('posts.index');
 Route::get('posts/{post}', 'PostController@show')->name('posts.show');
 
+/* Categorie */
+Route::get('categories/{category:slug}', 'CategoryController@show')->name('categories.show');
 
 
-Auth::routes(['register' => false]);
+//Auth::routes(['register' => false]); # Chiude la registrazione al sito
+Auth::routes();
 
 
 Route::prefix('admin')->middleware('auth')->namespace('Admin')->name('admin.')->group(function () {
