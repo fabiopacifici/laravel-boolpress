@@ -13,6 +13,14 @@
         Un categorized
         @endif
     </h5>
+    <div class="tags">
+        Tags:
+        @forelse($post->tags as $tag)
+        <span> {{$tag->name}} </span>
+        @empty
+        <span>no tags yet</span>
+        @endforelse
+    </div>
     <p class="lead">{{$post->body}}</p>
 
     <a href="{{route('posts.index')}}">Back</a>

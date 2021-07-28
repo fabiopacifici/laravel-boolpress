@@ -46,6 +46,21 @@
         </select>
     </div>
 
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <select multiple class="form-control" name="tags[]" id="tags">
+            <option value="" disabled> Select a Tag </option>
+            @if($tags)
+            @foreach($tags as $tag)
+            <option value="{{$tag->id}}">{{$tag->name}}</option>
+            @endforeach
+            @endif
+
+        </select>
+    </div>
+
+
+
     <button type="submit" class="btn btn-success">Submit</button>
 
 </form>

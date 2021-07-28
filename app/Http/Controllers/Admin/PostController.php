@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +31,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -48,6 +50,7 @@ class PostController extends Controller
             'title' => 'required | min:5 | max:255',
             'image' => 'nullable | image | max:50',
             'category_id' => 'nullable | exists:categories,id',
+            'tags' => 'nullable | exists:tags,id',
             'body' => 'required'
         ]);
         //ddd($validateData);
@@ -59,7 +62,8 @@ class PostController extends Controller
         }
 
         //ddd($validateData);
-        Post::create($validateData);
+        $post = Post::create($validateData);
+        $post->tags()->attach($request->tags);
         return redirect()->route('admin.posts.index');
     }
 
@@ -83,7 +87,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
 
 
     }
@@ -97,12 +102,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        //ddd($request->all());
         //ddd($request->hasFile('image'));
 
         $validateData = $request->validate([
             'title' => 'required | min:5 | max:255',
             'image' => 'nullable | image | max:50',
             'category_id' => 'nullable | exists:categories,id',
+            'tags' => 'exists:tags,id',
             'body' => 'required'
         ]);
         //ddd($validateData);
@@ -116,6 +123,9 @@ class PostController extends Controller
         //ddd($validateData);
 
         $post->update($validateData);
+        /* $post->tags()->detach();
+        $post->tags()->attach($request->tags); */
+        $post->tags()->sync($request->tags);
         return redirect()->route('admin.posts.index');
     }
 
