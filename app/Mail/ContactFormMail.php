@@ -34,4 +34,5 @@ class ContactFormMail extends Mailable
             ->subject('New Message from website')
             ->view('emails.contacts');
     }
+
 }
