@@ -1,8 +1,9 @@
 <?php
 
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Resources\PostResource;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +17,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::get('posts', 'API\PostController@index');
+
+Route::get('posts/{post}', function (Post $post) {
+    return new PostResource(Post::find($post));
 });

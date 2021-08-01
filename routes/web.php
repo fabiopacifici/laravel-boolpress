@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,4 +42,14 @@ Auth::routes();
 Route::prefix('admin')->middleware('auth')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'HomeController@index')->name('dashboard'); // admin.dashboard
     Route::resource('posts', PostController::class);
+});
+
+
+/* VUE-POSTS */
+
+Route::get('blog', function () {
+    return view('blog');
+});
+Route::get('blog/{post}', function (Post $post) {
+    return view('show', compact($post));
 });
